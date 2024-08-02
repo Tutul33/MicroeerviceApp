@@ -7,13 +7,13 @@
   # Order-https://github.com/Tutul33/OrderAPI-Microservice
   There are several upcoming modules which will be integrated later.
   The project structure will be:-
-  #Root:-
-       #-Frontend
-       #-Gateway
-       #-Admin
-       #-Inventory
-       #-Order
-       #-docker-compose.yml
+  # Root
+       1.Frontend
+       2.Gateway
+       3.Admin
+       4.Inventory
+       5.Order
+       6.docker-compose.yml
 # Tools and Technologies
   # ASP.NET Core for building microservices.
   # Docker for containerization.
