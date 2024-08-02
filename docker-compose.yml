@@ -1,0 +1,107 @@
+version: '3.4'
+
+services:
+  
+  adminservice:
+    image: adminservice
+    build:
+      context: ./AdminService
+      dockerfile: /AdminService/Dockerfile
+    ports:
+      - "4501:4501"
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - app-network
+
+  invapi:
+    image: invapi
+    build:
+      context: ./InvAPI
+      dockerfile: /InvAPI/Dockerfile
+    ports:
+      - "4502:4502"
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+    networks:
+      - app-network
+  
+  orderapi:
+    image: orderapi
+    build:
+      context: ./OrderAPI
+      dockerfile: /OrderAPI/Dockerfile
+    ports:
+      - "5006:5006"
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+    networks:
+      - app-network
+
+  gatewayapi:
+    image: ${DOCKER_REGISTRY:-}gatewayapi
+    build:
+      context: ./GatewayAPI
+      dockerfile: /GatewayAPI/Dockerfile
+    ports:
+      - "4500:4500"
+    depends_on:
+      - adminservice
+      - orderapi
+      - invapi
+    networks:
+      - app-network
+
+  db:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      SA_PASSWORD: "@Msi2023#"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - dbdata:/var/opt/mssql
+    networks:
+      - app-network
+
+  frontendapp:
+    image: frontendapp
+    build:
+      context: ./FrontEndApp
+      dockerfile: /Dockerfile
+    ports:
+      - "5009:80"
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
+       
+volumes:
+  dbdata:
