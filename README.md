@@ -5,10 +5,11 @@
   # Admin-https://github.com/Tutul33/AdminService-Microservice
   # Inventory-https://github.com/Tutul33/InvApi-Microservice
   # Order-https://github.com/Tutul33/OrderAPI-Microservice
+  There are several upcoming modules which will be integrated later.
 # Tools and Technologies
-  ASP.NET Core for building microservices.
-  Docker for containerization.
-  Kubernetes for orchestration.
-  RabbitMQ for messaging between services.
-  SQL Server for databases.
-  Ocelot for API Gateway.
+  # ASP.NET Core for building microservices.
+  # Docker for containerization.
+  # Kubernetes for orchestration.
+  # RabbitMQ for messaging between services.
+  # SQL Server for databases.
+  # Ocelot for API Gateway.
